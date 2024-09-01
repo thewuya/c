@@ -157,6 +157,7 @@ async function compileCode() {
             if (userOutput.trim() === expectedOutput.trim()) {
                 outputElement.textContent += "\n正确！输出与预期一致。";
                 updateUserExperience(1); // 增加 1 点经验
+                document.alert("经验+1");
                 isCodeSubmitted = true; // 标记代码已提交
             } else {
                 outputElement.textContent += "\n错误。请再试一次。";

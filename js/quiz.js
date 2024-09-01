@@ -1196,9 +1196,17 @@ function quizLoader(quiz_name, questions) {
     questions.forEach((q, index) => {
       const questionDiv = document.createElement('div');
       questionDiv.classList.add('question');
-      questionDiv.innerHTML = `<p>${index + 1}.${q.question}</p>`;
+      questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+
       q.options.forEach(option => {
-        questionDiv.innerHTML += `<input type="radio" name="q${index}" value="${option}"> ${option}<br>`;
+        // Create a unique id for each option
+        const optionId = `q${index}_option_${option}`;
+
+        // Add the input with label
+        questionDiv.innerHTML += `
+          <input type="radio" id="${optionId}" name="q${index}" value="${option}">
+          <label for="${optionId}">${option}</label><br>
+        `;
       });
 
       quizContainer.appendChild(questionDiv);
