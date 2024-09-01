@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>C 编译器</title>
+    <style>
+        #editor {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+        #output {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f7f7f7;
+        }
+        #expected-output {
+            margin-top: 20px;
+            font-weight: bold;
+            white-space: pre-wrap; /* 保留换行符 */
+            background-color: red;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+       
+    </style>
+</head>
+<body>
+    <h1>在线 C 编译器</h1>
+    <!-- 问题描述 -->
+    <p id="problem-description">编写一个 C 函数，打印 "Hello, World!"。</p>
+    
+    <!-- 预期输出展示 -->
+    <pre id="expected-output">预期输出: "Hello, World!"</pre> <!-- 更改为 <pre> 以保留换行符 -->
+    
+    <textarea id="editor" placeholder="在此处编写您的 C 代码..."></textarea><br>
+    <div class="button-container">
+        <button onclick="compileCode()">编译并运行</button>
+        <button onclick="downloadCode()">下载代码</button>
+        <button onclick="loadRandomProblem()">更换题目</button>
+    </div>
+    <pre id="output">输出将显示在这里...</pre>
+
+    <script src="../js/compiler.js"></script>
+</body>
+</html>

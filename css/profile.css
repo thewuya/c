@@ -1,0 +1,59 @@
+@font-face {
+    font-family: 'pixel-hanzi';
+    src: url('../fonts/hzk-pixel-16px.ttf'); 
+}
+
+/* General Styles */
+body {
+    background: #2B2B2B; /* Dark gray background for a cohesive look */
+    color: #E0E0E0; /* Light gray text for contrast */
+    font-family: 'pixel-hanzi', sans-serif;
+    cursor: url("../pictures/cursor.png"), auto; 
+}
+
+/* Profile Image */
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border: 5px solid #A0522D; /* Saddle brown border to match the message page */
+    border-radius: 50%; /* Circular profile picture */
+}
+
+/* Profile Information Box */
+.profile-info {
+    background: #3D3D3D; /* Slightly lighter dark gray for profile info */
+    border: 2px solid #A0522D; /* Saddle brown border to match the profile image */
+    box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Slight shadow for depth */
+}
+
+/* Friends List */
+.friends {
+    margin-top: 20px;
+}
+
+.list-group-item {
+    background: #4A4A4A; /* Dark gray for list items */
+    border: 1px solid #A0522D; /* Saddle brown border for consistency */
+    color: #E0E0E0; /* Light gray text for readability */
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #3D3D3D; /* Dark gray track background */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #A0522D; /* Saddle brown thumb */
+    border-radius: 10px; /* Rounded scrollbar thumb */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-info, .friends {
+        padding: 10px;
+    }
+}

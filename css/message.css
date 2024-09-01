@@ -1,0 +1,144 @@
+@font-face {
+    font-family: 'pixel-hanzi';
+    src: url('../fonts/hzk-pixel-16px.ttf');
+}
+
+body {
+    background-color: #f4f1e3; /* Old book paper color */
+    font-family: 'pixel-hanzi', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.book-wrapper {
+    width: 90%;
+    max-width: 600px;
+    height: auto;
+    background: linear-gradient(135deg, #f0e6d2 25%, #e4d5b7 25%, #e4d5b7 50%, #f0e6d2 50%, #f0e6d2 75%, #e4d5b7 75%, #e4d5b7 100%);
+    background-size: 10px 10px; /* 8-bit pixelated paper look */
+    padding: 20px;
+    border: 8px solid #705335;
+    box-shadow: 5px 5px 0 #8b6e4b, 10px 10px 0 #d1b395;
+    text-align: center;
+}
+
+.book-content {
+    padding: 20px;
+    background-color: #fff7e6; /* Light color inside the book */
+    border: 3px dashed #705335;
+}
+
+.message-list {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f4f1e3;
+    border: 2px dashed #705335;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.friend-select {
+    margin-bottom: 15px;
+}
+
+.friend-select label {
+    font-size: 16px;
+    color: #705335;
+    margin-right: 10px;
+}
+
+#friendList {
+    font-family: 'pixel-hanzi', sans-serif;
+    font-size: 16px;
+    padding: 5px;
+    border: 2px solid #705335;
+    background-color: #f4f1e3;
+    color: #705335;
+    cursor: pointer;
+    outline: none;
+    appearance: none; /* Remove default dropdown arrow for customization */
+    background-image: url('../images/arrow-down.png'); /* Custom arrow image */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px 12px; /* Adjust size of custom arrow */
+}
+
+#friendList:hover {
+    border-color: #8b6e4b;
+    background-color: #fff7e6;
+}
+
+#friendList option {
+    background-color: #f4f1e3;
+    color: #705335;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.message-form {
+    margin-bottom: 15px;
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 5px;
+    border: 2px solid #705335;
+    background-color: #f4f1e3;
+    font-size: 16px;
+}
+
+.send-button {
+    font-family: 'pixel-hanzi';
+    font-size: 16px;
+    padding: 5px 10px;
+    background-color: #705335;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.send-button:hover {
+    background-color: #8b6e4b;
+}
+
+@media screen and (max-width: 480px) {
+    .book-wrapper {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .book-content {
+        padding: 15px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+}
+
+.message {
+    font-family: 'pixel-hanzi';
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #705335;
+}
+
+.delete-button {
+    font-family: 'pixel-hanzi';
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 3px 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #e60000;
+}
