@@ -91,6 +91,9 @@ const request = indexedDB.open('UserDatabase', 1);
 
 request.onsuccess = function(event) {
     db = event.target.result;
+    if (!checkUserLoggedIn()) {
+        return; // 如果用户未登录，则停止执行
+    }
 };
 
 request.onerror = function(event) {
@@ -118,9 +121,6 @@ window.onload = function() {
 };
 
 async function compileCode() {
-    if (!checkUserLoggedIn()) {
-        return; // 如果用户未登录，则停止执行
-    }
 
     if (isCodeSubmitted) {
         alert('您已经提交了这个代码。请选择其他题目。');
@@ -154,10 +154,10 @@ async function compileCode() {
             outputElement.textContent = "输出:\n" + userOutput;
 
             // 比较用户输出与预期输出
-            if (userOutput.trim() === expectedOutput.trim()) {
+            if (userOutput === expectedOutput) {
                 outputElement.textContent += "\n正确！输出与预期一致。";
                 updateUserExperience(1); // 增加 1 点经验
-                document.alert("经验+1");
+                alert("经验+1");
                 isCodeSubmitted = true; // 标记代码已提交
             } else {
                 outputElement.textContent += "\n错误。请再试一次。";
