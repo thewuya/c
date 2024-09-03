@@ -50,8 +50,25 @@ a {
     border-bottom: none;
 }
 
-input[type="radio"] {
-    margin-right: 10px;
+input[type="radio"]
+{
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+
+}
+
+input[type="radio"]:hover{
+    background-color:#ddd;
+}
+
+input[type="radio"]:checked{
+    background-color:#8b6e4b;
+    border-color: #705335;
+    
 }
 
 button {

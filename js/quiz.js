@@ -1264,7 +1264,7 @@ function quizLoader(quiz_name, questions) {
       }
     });
 
-    const username = sessionStorage.getItem('username');
+    const username = localStorage.getItem('username');
 
     const transaction = db.transaction(['users'], 'readwrite');
     const objectStore = transaction.objectStore('users');
@@ -1325,7 +1325,7 @@ function quizLoader(quiz_name, questions) {
 
 
 function checkUserLoggedIn() {
-  const username = sessionStorage.getItem('username');
+  const username = localStorage.getItem('username');
   if (!username) {
       alert('请先登录！'); // Prompt user to log in
       window.location.href = 'log_in.html'; // Redirect to login page

@@ -13,7 +13,7 @@ function setupLevelButtons() {
     const buttons = document.querySelectorAll('button');
     const transaction = db.transaction(['users'], 'readonly');
     const objectStore = transaction.objectStore('users');
-    const userRequest = objectStore.get(sessionStorage.getItem('username'));
+    const userRequest = objectStore.get(localStorage.getItem('username'));
 
     userRequest.onsuccess = function(event) {
         const user = userRequest.result;
@@ -75,7 +75,7 @@ function unlockNextLevel(username, completedLevel) {
 }
 
 function checkUserLoggedIn() {
-    const username = sessionStorage.getItem('username');
+    const username = localStorage.getItem('username');
     if (!username) {
       alert('请先登录！'); 
       window.location.href = 'log_in.html';

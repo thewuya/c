@@ -18,7 +18,6 @@ request.onupgradeneeded = function(event) {
   messageStore.createIndex('sender', 'sender', {unique:false});
   messageStore.createIndex('receiver', 'receiver', {unique:false});
   messageStore.createIndex('messageText', 'messageText', { unique: false });
-
 };
 
 request.onsuccess = function(event) {
@@ -66,7 +65,6 @@ request.onsuccess = function(event) {
   
   const logInForm = document.getElementById('logInForm');
   if (logInForm){
-    
     logInForm.addEventListener('submit', handleLogInform)
   }
 
@@ -81,9 +79,7 @@ request.onerror = function(event) {
 };
 
 function toggleFlip() {
-  // Get the checkbox input element
   const toggle = document.getElementById('toggleFlip');
-  // Toggle the checked state
   toggle.checked = !toggle.checked;
 }
 
@@ -105,8 +101,6 @@ function handleSignInForm(event) {
     if (request.result) {
       alert('客户名已经被选了')
     } else {
-
-      
       const transaction = db.transaction(['users'], 'readwrite');
       const objectStore = transaction.objectStore('users');
 
@@ -137,17 +131,12 @@ function handleSignInForm(event) {
         document.getElementById('username').value = username;
         document.getElementById('password').value = password;
         toggleFlip();
-       
-        
       };
 
       addRequest.onerror = function () {
         alert('Error: ' + addRequest.error);
       };
-    
     };
-    
-
   }
 
   request.onerror = function() {
@@ -164,7 +153,6 @@ function handleLogInform (event) {
     return;
   }
 
-
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
   
@@ -175,17 +163,13 @@ function handleLogInform (event) {
   request.onsuccess = function () {
     const user = request.result;
     if (user && user.password == password){
-      sessionStorage.setItem('username', username);
-      sessionStorage.setItem('password', password);
-      sessionStorage.setItem('gender', user.gender);
+      localStorage.setItem('username', username);
       alert("成功")
       window.location.href = 'menu.html'
     }
     else{
       alert("密码不对吧")
     }
-
-
   };
 
   request.onerror = function () {
@@ -203,10 +187,9 @@ function loadInformation (){
   const username = document.getElementById('username');
   const password = document.getElementById('password');
   const gender = document.getElementById('gender');
-  username.innerHTML = sessionStorage.getItem('username');
-  password.innerHTML = sessionStorage.getItem('password');
-  gender.innerHTML = sessionStorage.getItem('gender');
-
+  username.innerHTML = localStorage.getItem('username');
+  password.innerHTML = localStorage.getItem('password');
+  gender.innerHTML = localStorage.getItem('gender');
 }
 
 function loadProfile (){
@@ -225,7 +208,7 @@ function loadProfile (){
   const userStore = transaction.objectStore('users');
   const friendStore = transaction.objectStore('friends');
 
-  const request = userStore.get(sessionStorage.getItem('username'));
+  const request = userStore.get(localStorage.getItem('username'));
 
   request.onsuccess = function () {
     const user = request.result;
@@ -262,8 +245,6 @@ function loadProfile (){
   request.onerror = function () {
     alert ('Error ' + request.error);
   };
-
-
 }
 
 function showRanking() {
@@ -293,7 +274,7 @@ function showRanking() {
       const listItem = document.createElement('li');
       listItem.textContent = `${index + 1}. username: ${user.username} level: ${user.lessonCompleted} experience: ${user.experience}`;
 
-      if (user.username === sessionStorage.getItem('username')) {
+      if (user.username === localStorage.getItem('username')) {
         listItem.textContent += ' - 这是你';
       } else {
         const addButton = document.createElement('button');
@@ -314,7 +295,7 @@ function showRanking() {
       return;
     }
 
-    const currentUsername = sessionStorage.getItem('username');
+    const currentUsername = localStorage.getItem('username');
 
     if (friendUsername === currentUsername) {
       alert('不可以加自己');
@@ -322,181 +303,178 @@ function showRanking() {
     }
 
     const transaction = db.transaction(['friends'], 'readwrite');
-    const objectStore = transaction.objectStore('friends');
+    const friendsStore = transaction.objectStore('friends');
 
-    const checkRequest = objectStore.get([currentUsername, friendUsername]);
+    const request = friendsStore.get([currentUsername, friendUsername]);
 
-    checkRequest.onsuccess = function () {
-      if (checkRequest.result) {
-        alert('已经是好友了');
+    request.onsuccess = function() {
+      if (request.result) {
+        alert('你们已经是朋友了');
       } else {
-        const friendRelation = {
-          username: currentUsername,
-          friendUsername: friendUsername
+        const addRequest = friendsStore.add({ username: currentUsername, friendUsername: friendUsername });
+        addRequest.onsuccess = function() {
+          alert(`成功加了 ${friendUsername}`);
         };
-        const addRequest = objectStore.add(friendRelation);
-        addRequest.onsuccess = function () {
-          alert('加了');
+        addRequest.onerror = function() {
+          alert(`Error: ${addRequest.error}`);
         };
-
-        addRequest.onerror = function () {
-          alert('失败了' + addRequest.error);
-        }
       }
     };
 
-    checkRequest.onerror = function () {
-      alert('失败了' + checkRequest.error);
+    request.onerror = function() {
+      alert(`Error: ${request.error}`);
     };
   }
 }
 
-
-function logInConvenient () {
-  const username = document.getElementById("username");
-  const password = document.getElementById("password");
-
-  username.value = sessionStorage.getItem("log_username");
-  password.value = sessionStorage.getItem("log_password");
+function handleLogout() {
+  localStorage.clear();
+  window.location.href = 'index.html';
 }
 
-function handleMessageForm(event) {
+function handleMessageForm (event) {
   event.preventDefault();
+
   if (!db) {
-    alert('try again');
+    console.error('再来依次');
     return;
   }
+
+  const messageText = document.getElementById('messageText').value;
+  const sender = localStorage.getItem('username');
   const receiver = document.getElementById('friendList').value;
-  const message = document.getElementById('message').value;
 
   const transaction = db.transaction(['messages'], 'readwrite');
-  const messageStore = transaction.objectStore('messages');
+  const objectStore = transaction.objectStore('messages');
 
-  const messages = {
-    sender: sessionStorage.getItem('username'),
+  const request = objectStore.add({
+    sender: sender,
     receiver: receiver,
-    messageText: message
-  };
+    messageText: messageText
+  });
 
-  const addRequest = messageStore.add(messages);
-  addRequest.onsuccess = function() {
-    alert("message sent");
-    document.getElementById('message').value = '';
-    loadMessage(); // Reload messages after sending
-  };
-
-  addRequest.onerror = function() {
-    alert("message");
-  };
-}
-
-function loadMessage() {
-  if (!db) {
-    console.error('你再来一次');
-    return;
-  }
-
-  const receiver = sessionStorage.getItem('username');
-  const transaction = db.transaction(['messages'], 'readonly');
-  const messageStore = transaction.objectStore('messages');
-  const receiverIndex = messageStore.index('receiver');
-  const request = receiverIndex.getAll(receiver);
-
-  request.onsuccess = function(event) {
-    const messages = event.target.result;
-    const messageList = document.getElementById("messageList");
-    messageList.innerHTML = '';
-
-    if (messages.length > 0) {
-      messages.forEach(message => {
-        const messageElement = document.createElement('div');
-        messageElement.className = 'message';
-
-        const messageContent = document.createElement('p');
-        messageContent.textContent = `From: ${message.sender} , Message: ${message.messageText}`;
-
-        const deleteButton = document.createElement('button');
-        deleteButton.className = 'delete-button';
-        deleteButton.textContent = 'Delete';
-        deleteButton.onclick = function() {
-          deleteMessage(message.id); // Use the message ID to delete the message
-        };
-
-        messageElement.appendChild(messageContent);
-        messageElement.appendChild(deleteButton);
-        messageList.appendChild(messageElement);
-      });
-    } else {
-      messageList.textContent = '你没有消息';
-    }
+  request.onsuccess = function() {
+    alert('成功发');
+    loadMessage();
   };
 
   request.onerror = function() {
-    console.error('消息失败了：', request.error);
+    alert('Error: ' + request.error);
   };
 
-  const currentUser = sessionStorage.getItem('username');
-  const friendTransaction = db.transaction(['friends'], 'readonly');
-  const friendStore = friendTransaction.objectStore('friends');
+  document.getElementById('sendMessageForm').reset();
+}
+
+function loadMessage (){
+  if (!db) {
+    console.error('再来依次');
+    return;
+  }
+
+  const transaction = db.transaction(['messages', 'friends']);
+  const messageStore = transaction.objectStore('messages');
+  const friendStore = transaction.objectStore('friends');
+
+  const receiverIndex = messageStore.index('receiver');
+  const request = receiverIndex.getAll(localStorage.getItem('username'));
+
+  const messageList = document.getElementById('messageList');
+  messageList.innerHTML = ''; 
+
+  request.onsuccess = function() {
+    if (request.result.length > 0) {
+      request.result.forEach(message => {
+        const messageItem = document.createElement('li');
+        messageItem.textContent = `发：${message.sender} - 说：${message.messageText}`;
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '删';
+        deleteButton.onclick = function() {
+          deleteMessage(message.id);
+        };
+        messageItem.appendChild(deleteButton);
+        messageList.appendChild(messageItem);
+      });
+    } else {
+      messageList.textContent = '没人发信息给你';
+    }
+  };
+
+  request.onerror = function () {
+    alert('再来');
+  }
+
+  // Complete loading friends for messaging
+  const friendListSelect = document.getElementById('friendList');
+  friendListSelect.innerHTML = ''; // Clear previous options
+
   const friendIndex = friendStore.index('username');
-  const friendRequest = friendIndex.getAll(currentUser);
+  const friendRequest = friendIndex.getAll(localStorage.getItem('username'));
 
-  friendRequest.onsuccess = function(event) {
-    const friends = event.target.result;
-    const friendList = document.getElementById('friendList');
-    friendList.innerHTML = '<option value="">Select a friend</option>';
-
-    if (friends.length > 0) {
-      friends.forEach(friendRelation => {
+  friendRequest.onsuccess = function() {
+    if (friendRequest.result.length > 0) {
+      friendRequest.result.forEach(friendRelation => {
         const option = document.createElement('option');
         option.value = friendRelation.friendUsername;
         option.textContent = friendRelation.friendUsername;
-        friendList.appendChild(option);
+        friendListSelect.appendChild(option);
       });
+    } else {
+      const noFriendsOption = document.createElement('option');
+      noFriendsOption.textContent = '你没有朋友';
+      noFriendsOption.disabled = true;
+      friendListSelect.appendChild(noFriendsOption);
     }
   };
 
   friendRequest.onerror = function() {
-    console.error('Error loading friends:', friendRequest.error);
+    console.error('再来一次：' + friendRequest.error);
   };
 }
 
 function deleteMessage(messageId) {
-  if (!db) {
-    alert('Database not available');
-    return;
-  }
-
   const transaction = db.transaction(['messages'], 'readwrite');
-  const messageStore = transaction.objectStore('messages');
-  const deleteRequest = messageStore.delete(messageId);
+  const objectStore = transaction.objectStore('messages');
+  const request = objectStore.delete(messageId);
 
-  deleteRequest.onsuccess = function() {
-    alert('Message deleted');
-    loadMessage(); // Reload messages after deletion
+  request.onsuccess = function() {
+    alert('成功删除');
+    loadMessage(); 
   };
 
-  deleteRequest.onerror = function() {
-    alert('Failed to delete message');
-  };
-}
-function handleLogout() {
-  sessionStorage.clear();
-  window.location.href = 'log_in.html'; 
+  request.onerror = function () {
+    alert ('Error ' + request.error);
+  }
 }
 
 function checkUserLoggedIn() {
-  const username = sessionStorage.getItem('username');
-  if (!username) {
-    alert('请先登录！'); 
-    window.location.href = 'log_in.html'; 
+  if (!localStorage.getItem('username')) {
+    alert('请登录');
+    window.location.href = 'index.html';
     return false;
   }
   return true;
 }
 
+function levelChecker() {
+  if (!db) {
+    alert('再来');
+    return;
+  }
 
+  const transaction = db.transaction(['users'], 'readonly');
+  const objectStore = transaction.objectStore('users');
+  const request = objectStore.get(localStorage.getItem('username'));
 
+  request.onsuccess = function(event) {
+    const user = event.target.result;
+    const level = user.lessonCompleted;
 
+    const levelCompletionList = Object.keys(user.levelFollower).filter(level => user.levelFollower[level]);
 
+    console.log(levelCompletionList);
+  };
 
+  request.onerror = function() {
+    alert('Error: ' + request.error);
+  };
+}

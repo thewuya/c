@@ -117,7 +117,7 @@ function checkAnswer(selectedIndex, correctIndex) {
 }
 
 function updateExperience(points) {
-    const username = sessionStorage.getItem('username');
+    const username = localStorage.getItem('username');
     if (!username) {
         console.error('No username found in session storage.');
         return;
@@ -154,7 +154,7 @@ function updateExperience(points) {
 }
 
 function checkUserLoggedIn() {
-    const username = sessionStorage.getItem('username');
+    const username = localStorage.getItem('username');
     if (!username) {
         alert('请先登录！'); // Prompt user to log in
         window.location.href = 'log_in.html'; // Redirect to login page

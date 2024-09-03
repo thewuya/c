@@ -173,7 +173,7 @@ async function compileCode() {
 }
 
 function checkUserLoggedIn() {
-    const username = sessionStorage.getItem('username');
+    const username = localStorage.getItem('username');;
     if (!username) {
         alert('请先登录！'); // 提示用户登录
         window.location.href = 'log_in.html'; // 重定向到登录页面
@@ -183,7 +183,7 @@ function checkUserLoggedIn() {
 }
 
 function updateUserExperience(points) {
-    const username = sessionStorage.getItem('username');
+    const username = localStorage.getItem('username');
     if (!username) {
         console.error('未在会话存储中找到用户名。');
         return;
