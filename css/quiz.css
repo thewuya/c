@@ -83,6 +83,21 @@ button {
     transition: background 0.3s, color 0.3s;
 }
 
+#story_link{
+    animation: aparecerDesaparecer 2s infinite;
+}
+@keyframes aparecerDesaparecer {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 button:hover {
     background: #fff;
     color: #8e735b;

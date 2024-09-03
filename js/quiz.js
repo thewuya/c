@@ -1199,10 +1199,7 @@ function quizLoader(quiz_name, questions) {
       questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
 
       q.options.forEach(option => {
-        // Create a unique id for each option
         const optionId = `q${index}_option_${option}`;
-
-        // Add the input with label
         questionDiv.innerHTML += `
           <input type="radio" id="${optionId}" name="q${index}" value="${option}">
           <label for="${optionId}">${option}</label><br>
@@ -1230,7 +1227,6 @@ function quizLoader(quiz_name, questions) {
       alert(`请回答所有问题。以下问题未回答：${unansweredQuestions.map(index => index + 1).join(', ')}`);
 
       document.querySelectorAll('.question').forEach((questionDiv, index) => {
-        // Remove any previous "not answered" message
         const existingLabels = questionDiv.querySelectorAll('span');
         existingLabels.forEach(label => label.remove());
 
@@ -1248,7 +1244,6 @@ function quizLoader(quiz_name, questions) {
   submitButton.onclick = function() {
     showUnansweredQuestions();
 
-    // Ensure that all questions are answered before proceeding
     const unansweredQuestions = allQuestionsAnswered();
     if (unansweredQuestions.length > 0) {
       return; // Stop further execution if there are unanswered questions
@@ -1263,9 +1258,8 @@ function quizLoader(quiz_name, questions) {
         score++;
       }
     });
-
+    document.getElementById("score").innerHTML = `score ${score}/10`;
     const username = localStorage.getItem('username');
-
     const transaction = db.transaction(['users'], 'readwrite');
     const objectStore = transaction.objectStore('users');
     const request = objectStore.get(username);
@@ -1290,19 +1284,28 @@ function quizLoader(quiz_name, questions) {
         };
       } else {
         alert('你已经完成过这个测验了，经验值无法再次更新。');
+        
       }
 
       if (score >= 6) {
         const nextLevelElement = document.getElementById('level');
         const nextLevel = nextLevelElement.textContent.trim();
+        var path = window.location.pathname;
+            // 从路径中提取文件名
+        var fileName = path.substring(path.lastIndexOf('/') + 1);
+        const story_link = document.getElementById('story_link');
+        story_link.innerHTML = '剧情解锁(点击)';
+        story_link.style.color = 'red';
+        story_link.href = `故事/${ fileName }`;
 
         if (user.levelFollower && !user.levelFollower[nextLevel]) {
           user.levelFollower[nextLevel] = true;
           user.lessonCompleted = parseInt(user.lessonCompleted) + 1;
           const updateRequest = objectStore.put(user);
+
           updateRequest.onsuccess = function() {
             alert(`恭喜！你已解锁下一等级 ${nextLevel}!`);
-            document.getElementById("score").innerHTML = `score ${ score }/10`;
+
           };
 
           updateRequest.onerror = function() {
@@ -1310,8 +1313,8 @@ function quizLoader(quiz_name, questions) {
           };
         }
       } else {
-        alert(`You did not pass. Your score is ${score}. Try again.`);
-        document.getElementById("score").innerHTML = `score ${ score }/10`;
+        alert(`你未通过测试。你的得分是 ${score}。再试一次。`);
+        document.getElementById("score").innerHTML = `score ${score}/10`;
       }
     };
 
@@ -1323,15 +1326,12 @@ function quizLoader(quiz_name, questions) {
   displayQuestions();
 }
 
-
 function checkUserLoggedIn() {
   const username = localStorage.getItem('username');
   if (!username) {
-      alert('请先登录！'); // Prompt user to log in
-      window.location.href = 'log_in.html'; // Redirect to login page
-      return false;
+    alert('请先登录！'); // Prompt user to log in
+    window.location.href = 'log_in.html'; // Redirect to login page
+    return false;
   }
   return true;
 }
-
-
