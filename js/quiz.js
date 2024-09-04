@@ -271,7 +271,8 @@ request.onsuccess = function(event) {
               "输入项可以为一实型常量，如scanf（\"%f\",3.5）",
               "只有格式控制，没有输入项，也能进行正确输入，如scanf（\"a=%d，b=%d\"）",
               "当输入数据时，必须指明变量的地址，如scanf（\"%f\"，&f）",
-              "当输入一个实型数据时，格式控制部分应规定小数点后的位数，如scanf（\"%4.2f\",&f）"
+              
+              "当输入一个实型数据时，格式控制部分应规定小数点后的位数，如scanf（\"%4.2f\",&f)"
             ],
             answer: "当输入数据时，必须指明变量的地址，如scanf（\"%f\"，&f）"
           }
@@ -1280,9 +1281,11 @@ function quizLoader(quiz_name, questions) {
       questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
 
       q.options.forEach(option => {
-        const optionId = `q${index}_option_${option}`;
+        const escapedOption = option.replace(/"/g, '&quot;'); // Escapa comillas dobles
+        const optionId = `q${index}_option_${escapedOption}`;
+      
         questionDiv.innerHTML += `
-          <input type="radio" id="${optionId}" name="q${index}" value="${option}">
+          <input type="radio" id="${optionId}" name="q${index}" value="${escapedOption}">
           <label for="${optionId}">${option}</label><br>
         `;
       });
@@ -1334,18 +1337,33 @@ function quizLoader(quiz_name, questions) {
     let totalQuestions = questions.length;
 
     questions.forEach((q, index) => {
+      const options = document.querySelectorAll(`input[name="q${index}"]`); // Obtener todos los elementos de opción para la pregunta actual
+      options.forEach(option => {
+        const existingResult = option.parentNode.querySelector('span'); // Buscar un <span> en el nodo padre
+        if (existingResult) {
+          existingResult.remove(); // Eliminar el <span> existente
+        }
+      });
+    });
+
+    questions.forEach((q, index) => {
       const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
       const result = document.createElement('span');
-      if (selectedOption && selectedOption.value === q.answer) {
+      
+
+      
+      if (selectedOption && selectedOption.value.trim() === q.answer.trim()) {
         score++;
         result.innerHTML = '(对的)';
         result.style.color = 'green';
       }
       else{
+        console.log(selectedOption.value.trim());
+        console.log(q.answer.trim());
         result.innerHTML = '(不对)';
         result.style.color = 'red';
       }
-
+      result.style.fontSize = '15px';
       selectedOption.parentNode.appendChild(result);
 
     });
