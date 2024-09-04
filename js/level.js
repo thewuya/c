@@ -9,6 +9,12 @@ request.onsuccess = function(event) {
     setupLevelButtons();
 };
 
+window.addEventListener('pageshow', function(event) {
+    if (!event.persisted) {  // Si la página no se carga desde la caché
+        setupLevelButtons(); // Llamar a la función de configuración de botones
+    }
+});
+
 function setupLevelButtons() {
     const buttons = document.querySelectorAll('button');
     const transaction = db.transaction(['users'], 'readonly');

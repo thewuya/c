@@ -276,6 +276,7 @@ function showRanking() {
 
       if (user.username === localStorage.getItem('username')) {
         listItem.textContent += ' - 这是你';
+  
       } else {
         const addButton = document.createElement('button');
         addButton.textContent = '加友';
