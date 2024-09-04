@@ -1335,9 +1335,19 @@ function quizLoader(quiz_name, questions) {
 
     questions.forEach((q, index) => {
       const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+      const result = document.createElement('span');
       if (selectedOption && selectedOption.value === q.answer) {
         score++;
+        result.innerHTML = '(对的)';
+        result.style.color = 'green';
       }
+      else{
+        result.innerHTML = '(不对)';
+        result.style.color = 'red';
+      }
+
+      selectedOption.parentNode.appendChild(result);
+
     });
     document.getElementById("score").innerHTML = `score ${score}/10`;
     const username = localStorage.getItem('username');
