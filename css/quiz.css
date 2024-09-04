@@ -28,6 +28,11 @@ a {
     font-weight: bold;
 }
 
+#next_quiz{
+    color: gold;
+
+}
+
 #quizContainer {
     background: #ffffff; /* White background for the card */
     border: 1px solid #d3b7a0; /* Soft brown border */

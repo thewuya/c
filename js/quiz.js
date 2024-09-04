@@ -1407,11 +1407,20 @@ function quizLoader(quiz_name, questions) {
         story_link.style.color = 'red';
         story_link.href = `故事/${ fileName }`;
 
+
+        button_next = document.getElementById("next_quiz");
+          button_next.href = `quiz_${parseInt(user.lessonCompleted)+2}.html`;
+          button_next.innerHTML = 'newest level';
+
         if (user.levelFollower && !user.levelFollower[nextLevel]) {
           user.levelFollower[nextLevel] = true;
           user.lessonCompleted = parseInt(user.lessonCompleted) + 1;
           const updateRequest = objectStore.put(user);
 
+
+          
+
+          
           updateRequest.onsuccess = function() {
             alert(`恭喜！你已解锁下一等级 ${nextLevel}!`);
 
