@@ -340,7 +340,7 @@ function handleMessageForm (event) {
     return;
   }
 
-  const messageText = document.getElementById('messageText').value;
+  const messageText = document.getElementById('message').value;
   const sender = localStorage.getItem('username');
   const receiver = document.getElementById('friendList').value;
 
