@@ -6,22 +6,31 @@
         <link rel="stylesheet" href="../../css/bootstrap.css">
         <link rel="stylesheet" href="../../css/study.css">
         <link rel="stylesheet" href="../../css/prism.css">
+        <link rel="stylesheet" href="../../css/back_button.css">
     </head>
     <body style="font-family: HZKPixel;">
+        <a  href="../menu_experience.html" class="small-retro back-retro">回去</a>
       <div class="parent">
         <div class="child">
           <div class="row">
             <div class="col-1"  >
-              <div id="simple-list-example" class="d-flex flex-column gap-2 simple-list-example-scrollspy text-center" >
+                <button class="dropdown-button" data-menu="menu1">介绍&darr;</button>
+                <div id="menu1" class="dropdown-content">
                 <a class="btn-retro" href="../../templates/study/study1.html">C 教程</a>
                 <a class="btn-retro" href="../../templates/study/study2.html">程序结构</a>
                 <a class="btn-retro" href="../../templates/study/study3.html">基础语法</a>
                 <a class="btn-retro" href="../../templates/study/study4.html">数据类型</a>
+                </div>
+                <button class="dropdown-button" data-menu="menu2">基础&darr;</button>
+                <div id="menu2" class="dropdown-content">
                 <a class="btn-retro" href="../../templates/study/study5.html">变量</a>
                 <a class="btn-retro" href="../../templates/study/study6.html">常量</a>
                 <a class="btn-retro" href="../../templates/study/study7.html">存储类</a>
                 <a class="btn-retro" href="../../templates/study/study8.html">运算符</a>
                 <a class="btn-retro" href="../../templates/study/study9.html">判断</a>
+                </div>
+                <button class="dropdown-button" data-menu="menu3">进阶&darr;</button>
+                <div id="menu3" class="dropdown-content">
                 <a class="btn-retro" href="../../templates/study/study10.html">循环</a>
                 <a class="btn-retro" href="../../templates/study/study11.html">函数</a>
                 <a class="btn-retro" href="../../templates/study/study12.html">作用域</a>
@@ -30,7 +39,7 @@
                 <a class="btn-retro" href="../../templates/study/study15.html">指针</a>
                 <a class="btn-retro" href="../../templates/study/study16.html">字符串</a>
                 <a class="btn-retro" href="../../templates/study/study17.html">结构体</a>
-              </div>
+                </div>
             </div>
 
             <div class="col-9">
@@ -129,6 +138,7 @@ int i = (int)d; // 显式将double类型转换为int类型
           </div>
         </div>
     </div>
+    <script src="../../js/study.js" ></script>
         <script src="../../js/bootstrap.js" defer></script>
         <script src="../../js/prism.js"></script>
     </body>

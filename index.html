@@ -1,65 +1,28 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="zh">
     <head>
-    <title>介绍</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/introduce.css">
+        <title>menu</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../css/menu.css">
+        <link rel="stylesheet" href="../css/back_button.css">
     </head>
+
     <body >
-      <!--标题-->
-      
-      <!--介绍-->
-      <div class="card">
-        <input type="radio" name="select" id="slide_1" checked>
-        <input type="radio" name="select" id="slide_2">
-        <input type="radio" name="select" id="slide_3">
-        <input type="checkbox" id="slideImg">
-      
-        <div class="slider">
-          <label for="slide_1" class="slide slide_1"></label>
-          <label for="slide_2" class="slide slide_2"></label>
-          <label for="slide_3" class="slide slide_3"></label>
+        
+        <div class="menu">
+            <ul>
+                <li><a href="templates/log_in.html" class="btn-retro">登录</a></li>
+                <li><a href="templates/team.html" class="btn-retro">team</a></li>
+                <img id = "speaker" onclick = "play_music()" style="width: 40px; height: 40px;" src="pictures/speaker.png">
+            </ul>
         </div>
-      
-        <div class="inner_part">
-          <label for="slideImg" class="img">
-            <img class="img_1" src="pictures/introduce1.jpg">
-          </label>
-          <div class="content content_1">
-            <div class="title">İstanbul</div>
-            <div class="text">
-              Istanbul, a fascinating city built on two Continents, divided by the Bosphorus Strait. This is one of the greatest cities in the world.
-            </div>
-            <a href="templates/homepage.html" class="btn">Learn more</a>
-          </div>
-        </div>
-      
-        <div class="inner_part">
-          <label for="slideImg" class="img">
-            <img class="img_2" src="pictures/introduce2.jpg">
-          </label>
-          <div class="content content_2">
-            <div class="title">Ankara</div>
-            <div class="text">
-              Ankara is Turkey's beating heart, second largest city, located in the Central Anatolia region and home to the Grand National Assembly of Turkey.
-            </div>
-            <a href="templates/homepage.html" class="btn">Learn more</a>
-          </div>
-        </div>
-      
-        <div class="inner_part">
-          <label for="slideImg" class="img">
-            <img class="img_3" src="pictures/introduce3.jpg">
-          </label>
-          <div class="content content_3">
-            <div class="title">İzmir</div>
-            <div class="text">Located on the shores of the Aegean Sea, west of the Anatolian Peninsula, İzmir is the third-largest city in Turkey.
-            </div>
-            <a href="templates/homepage.html" class="btn">Learn more</a>
-          </div>
-        </div>
-      </div>
-    <script src="js/bootstrap.js"></script>
+    
+        <audio id="music-player"autoplay>
+            <source src="audio/index.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        
+        <script src="js/menu.js" defer></script>
     </body>
 </html>

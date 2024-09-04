@@ -329,7 +329,7 @@ function showRanking() {
 
 function handleLogout() {
   localStorage.clear();
-  window.location.href = 'index.html';
+  window.location.href = '../index.html';
 }
 
 function handleMessageForm (event) {
@@ -449,7 +449,7 @@ function deleteMessage(messageId) {
 function checkUserLoggedIn() {
   if (!localStorage.getItem('username')) {
     alert('请登录');
-    window.location.href = 'index.html';
+    window.location.href = '../index.html';
     return false;
   }
   return true;
